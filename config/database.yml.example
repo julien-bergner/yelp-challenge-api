@@ -1,0 +1,8 @@
+production:
+  adapter: mysql2
+  host: localhost
+  port: 3306
+  database: yelp_challenge_api_production
+  username: username
+  password: password
+  encoding: utf8
