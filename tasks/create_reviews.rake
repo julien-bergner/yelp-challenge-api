@@ -2,7 +2,9 @@ require '././app/models/review'
 
 namespace :reviews do
 	task :create do
-		File.open("././datasets/yelp_academic_dataset_review.json", "r") do |file|
+    puts "Import reviews"
+    puts "Start: #{Time.now}"
+    File.open("././datasets/yelp_academic_dataset_review.json", "r") do |file|
     		while (line = file.gets)
     			json = JSON.parse(line)
 
@@ -16,10 +18,11 @@ namespace :reviews do
     			stars = json["stars"]
     			date = json["date"]
 
-				Review.create!(	yelp_id: yelp_id, yelp_user_id: yelp_user_id, yelp_business_id: yelp_business_id, 
+				  Review.create!(	yelp_id: yelp_id, yelp_user_id: yelp_user_id, yelp_business_id: yelp_business_id,
 								funny_count: funny_count, useful_count: useful_count, cool_count: cool_count,
 								text: text, stars: stars, date: date)
     		end
 		end
+    puts "End: #{Time.now}"
 	end
 end
