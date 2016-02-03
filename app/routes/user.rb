@@ -12,11 +12,25 @@ resource :users, desc: 'Users' do
     get do
       present UserMapper.get_by_yelp_id(params[:yelp_id])
     end
+
+    desc 'Get ten recommended businesses for the specified Yelp ID'
+    params do
+      requires :yelp_id, type: String, desc: 'Yelp ID', documentation: { example: '15SdjuK7DmYqUAj6rjGowg' }
+    end
+    get :recommendations do
+      { recommendations:
+        [
+          {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"},
+          {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}
+        ]
+      }
+    end
+
   end
 
   desc 'Create a User', entity: User::Entity
   params do
-    requires :yelp_id, type: String, desc: 'Yelp User ID', documentation: { example: '15SdjuK7DmYqUAj6rjGowg' }  
+    requires :yelp_id, type: String, desc: 'Yelp User ID', documentation: { example: '15SdjuK7DmYqUAj6rjGowg' }
     requires :id_nearest_neighbour_1, type: String, desc: 'Proximity of nearest neighbour 1', documentation: { example: '-o6LK0LdVlQcE2h7pdoFuA' }
     requires :proximity_nearest_neighbour_1, type: String, desc: 'Yelp ID of nearest neighbour 1', documentation: { example: '0.31753719888931581' }
     requires :id_nearest_neighbour_2, type: String, desc: 'Proximity of nearest neighbour 2', documentation: { example: '-o6LK0LdVlQcE2h7pdoFuA' }
