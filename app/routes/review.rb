@@ -17,7 +17,8 @@ resource :reviews, desc: 'Reviews' do
   desc 'Create a review', entity: Review::Entity
   params do
     requires :yelp_id, type: String, desc: 'Yelp ID of this review', documentation: { example: '15SdjuK7DmYqUAj6rjGowg' }
-    requires :yelp_user_id, type: String, desc: 'Yelp ID of the author of this review', documentation: { example: 'Xqd0DzHaiyRqVH3WRG7hzg' }
+    requires :yelp_user_id, type: String, desc: 'Yelp ID of the author of this review', documentation: { example: 'vcNAWiLM4dR7D2nwwJ7nCA' }
+    requires :yelp_business_id, type: String, desc: 'Yelp Business ID of the business this review is about', documentation: { example: 'SKLw05kEIlZcpTD5pqma8Q' }
     requires :funny_count, type: Integer, desc: 'How often the review has been voted as funny', documentation: { example: '8' }
     requires :useful_count, type: Integer, desc: 'How often the review has been voted as useful', documentation: { example: '9' }
     requires :cool_count, type: Integer, desc: 'How often the review has been voted as cool', documentation: { example: '10' }

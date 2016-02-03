@@ -7,6 +7,7 @@ class Review
     expose :id, documentation: { type: 'Integer', desc: 'Database ID of this record' }
     expose :yelp_id, documentation: { type: 'String', desc: 'Yelp ID of this review' }
     expose :yelp_user_id, documentation: { type: 'String', desc: 'Yelp ID of the author of this review' }
+    expose :yelp_business_id, documentation: { type: 'String', desc: 'Yelp Business ID of the business this review is about' }
     expose :funny_count, documentation: { type: 'Integer', desc: 'How often the review has been voted as funny' }
     expose :useful_count, documentation: { type: 'Integer', desc: 'How often the review has been voted as useful' }
     expose :cool_count, documentation: { type: 'Integer', desc: 'How often the review has been voted as cool' }
