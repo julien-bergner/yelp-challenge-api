@@ -10,6 +10,10 @@ gem 'grape-entity'
 gem 'rack-console'
 gem 'unicorn'
 
+# Documentation
+gem 'grape-swagger'
+gem 'sinatra'
+
 group :development, :test do
   gem 'pry'
 end

@@ -17,9 +17,8 @@ module API
       eval IO.read(file), binding
     end
 
-    get 'hallo' do
-      { :hello => 'world' }.to_json
-    end
+    add_swagger_documentation hide_documentation_path: true, hide_format: true, api_version: self.version
 
   end
 end
+3

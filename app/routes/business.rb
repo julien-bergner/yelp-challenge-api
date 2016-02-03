@@ -7,7 +7,7 @@ resource :businesses, desc: 'Businesses' do
 
     desc 'Get business by Yelp ID', entity: Business::Entity
     params do
-      requires :yelp_id, type: String, desc: 'Yelp ID', documentation: { example: '15SdjuK7DmYqUAj6rjGowg' }
+      requires :yelp_id, type: String, desc: 'Yelp ID', documentation: { example: 'vcNAWiLM4dR7D2nwwJ7nCA' }
     end
     get do
       present BusinessMapper.get_by_yelp_id(params[:yelp_id])
