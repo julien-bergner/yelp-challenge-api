@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127220601) do
+ActiveRecord::Schema.define(version: 20160203222515) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "yelp_id",      limit: 255
@@ -28,17 +28,22 @@ ActiveRecord::Schema.define(version: 20160127220601) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.string   "yelp_id",      limit: 255
-    t.string   "yelp_user_id", limit: 255
-    t.integer  "funny_count",  limit: 4
-    t.integer  "useful_count", limit: 4
-    t.integer  "cool_count",   limit: 4
-    t.text     "text",         limit: 65535
-    t.integer  "stars",        limit: 4
+    t.string   "yelp_id",          limit: 255
+    t.string   "yelp_user_id",     limit: 255
+    t.string   "yelp_business_id", limit: 255
+    t.integer  "funny_count",      limit: 4
+    t.integer  "useful_count",     limit: 4
+    t.integer  "cool_count",       limit: 4
+    t.text     "text",             limit: 65535
+    t.integer  "stars",            limit: 4
     t.date     "date"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
+
+  add_index "reviews", ["yelp_business_id"], name: "index_reviews_on_yelp_business_id", using: :btree
+  add_index "reviews", ["yelp_id"], name: "index_reviews_on_yelp_id", using: :btree
+  add_index "reviews", ["yelp_user_id"], name: "index_reviews_on_yelp_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string "yelp_id",                        limit: 255

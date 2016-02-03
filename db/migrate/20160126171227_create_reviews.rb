@@ -4,6 +4,7 @@ class CreateReviews < ActiveRecord::Migration
     create_table :reviews do |t|
       t.string    "yelp_id",          limit: 255
       t.string    "yelp_user_id",     limit: 255
+      t.string    "yelp_business_id",     limit: 255
       t.integer   "funny_count"      
       t.integer   "useful_count"     
       t.integer   "cool_count"       
