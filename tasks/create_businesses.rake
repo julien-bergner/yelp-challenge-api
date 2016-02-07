@@ -8,7 +8,7 @@ namespace :businesses do
     		while (line = file.gets)
     			json = JSON.parse(line)
 
-    			yelp_id = json["review_id"]
+    			yelp_id = json["business_id"]
     			name = json["name"]
     			full_address = json["full_address"]
     			city = json["city"]
@@ -18,7 +18,7 @@ namespace :businesses do
                 review_count = json["review_count"]
     			stars = json["stars"]
 
-				Business.create!(   yelp_id: yelp_id, name: name, full_address: full_address, 
+				Business.create!(   yelp_id: yelp_id, name: name, full_address: full_address,
                                     city: city, categories: categories, longitude: longitude, latitude: latitude,
                                     review_count: review_count, stars: stars)
     		end
