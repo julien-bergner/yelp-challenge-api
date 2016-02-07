@@ -11,7 +11,9 @@ class Business
     expose :city, documentation: { type: 'String', desc: 'City of this business' }
     expose :stars, documentation: { type: 'Integer', desc: 'Average amount of stars this business got' }
     expose :review_count, documentation: { type: 'Integer', desc: 'Amount of review this business got' }
-    expose :categories, documentation: { type: 'String', desc: 'Categories this business belongs to' }
+    expose :categories, documentation: { type: 'String', desc: 'Categories this business belongs to' } do |business|
+      JSON.parse(business.categories)
+    end
     expose :longitude, documentation: { type: 'String', desc: 'Longitude of this business' }
     expose :latitude, documentation: { type: 'String', desc: 'Latitude of this business' }
   end
