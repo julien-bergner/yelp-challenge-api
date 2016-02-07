@@ -1,5 +1,6 @@
 require 'mappers/user_mapper'
 require 'entities/user'
+require 'services/recommendation_service'
 
 resource :users, desc: 'Users' do
 
@@ -18,12 +19,9 @@ resource :users, desc: 'Users' do
       requires :yelp_id, type: String, desc: 'Yelp ID', documentation: { example: '15SdjuK7DmYqUAj6rjGowg' }
     end
     get :recommendations do
-      { recommendations:
-        [
-          {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"},
-          {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}, {"business_id":"score"}
-        ]
-      }
+      recommendation_service = RecommendationService.for(params[:yelp_id])
+      present recommendation_service.recommendations
+      present recommendation_service.businesses
     end
 
   end
