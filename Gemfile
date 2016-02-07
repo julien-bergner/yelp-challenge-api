@@ -9,6 +9,7 @@ gem 'grape'
 gem 'grape-entity'
 gem 'rack-console'
 gem 'unicorn'
+gem 'grape-cors'
 
 # Documentation
 gem 'grape-swagger'

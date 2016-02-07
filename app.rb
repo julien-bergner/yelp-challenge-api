@@ -18,6 +18,6 @@ module API
     end
 
     add_swagger_documentation hide_documentation_path: true, hide_format: true, api_version: self.version
-
+    Grape::CORS.apply!
   end
 end
