@@ -4,7 +4,7 @@ require 'grape-entity'
 class User
   class Entity < Grape::Entity
     root 'users', 'user'
-    expose :id, documentation: { type: 'Integer', desc: 'Database ID of this record' }
+    #expose :id, documentation: { type: 'Integer', desc: 'Database ID of this record' }
     expose :yelp_id, documentation: { type: 'String', desc: 'Yelp User ID' }
     expose :id_nearest_neighbour_1, documentation: { type: 'String', desc: 'Proximity of nearest neighbour 1' }
     expose :proximity_nearest_neighbour_1, documentation: { type: 'String', desc: 'Yelp ID of nearest neighbour 1' }

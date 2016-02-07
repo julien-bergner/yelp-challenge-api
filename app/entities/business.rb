@@ -4,7 +4,7 @@ require 'grape-entity'
 class Business
   class Entity < Grape::Entity
     root 'businesses', 'business'
-    expose :id, documentation: { type: 'Integer', desc: 'Database ID of this record' }
+    #expose :id, documentation: { type: 'Integer', desc: 'Database ID of this record' }
     expose :yelp_id, documentation: { type: 'String', desc: 'Yelp ID of this business' }
     expose :name, documentation: { type: 'String', desc: 'Name of this business' }
     expose :full_address, documentation: { type: 'String', desc: 'Full address of this business' }
