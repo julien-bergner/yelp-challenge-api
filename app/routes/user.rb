@@ -18,10 +18,15 @@ resource :users, desc: 'Users' do
     params do
       requires :yelp_id, type: String, desc: 'Yelp ID', documentation: { example: '15SdjuK7DmYqUAj6rjGowg' }
     end
-    get :recommendations do
+    get 'recommendations' do
       recommendation_service = RecommendationService.for(params[:yelp_id])
-      present recommendation_service.recommendations
-      present recommendation_service.businesses
+      
+      if recommendation_service.present?
+        present recommendation_service.list_of_recommendations
+        present recommendation_service.list_of_businesses
+      else
+        "Yelp User ID not found."
+      end
     end
 
   end

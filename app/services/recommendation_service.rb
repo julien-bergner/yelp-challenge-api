@@ -2,38 +2,66 @@ class RecommendationService < Struct.new(:user)
 
   def self.for(yelp_id)
     user = User.find_by_yelp_id(yelp_id)
+    return nil if user.nil?
     new(user)
   end
 
-  def recommendations
-    { recommendations:
-      {
-        "W2RFJg1N_MzuI8I42MQ2VA": 29,
-        "frvS-8am51BA9b4G1cbX9Q": 25,
-        "TVUIj9fsVF3JwvHkz_6-KQ": 23,
-        "ePiK7IM1ZWQiwuivFwKE1Q": 21,
-        "miDl22E-Vx1bTBIQXmYF9g": 21,
-        "QeD2Nre6KyYf1pci4W9QgA": 18,
-        "wtoJcKF1MMapd6nW-8a21g": 18,
-        "CdZKeUZtCjqV0ni2NeFlgA": 18,
-        "Qi61w8ZGqtipWfoALZq1hw": 17,
-        "0Q7ftIbv1r7Jiupuxi7WDw": 15
-      }
-    }
+  def perform
+    load_nearest_neighbours
+    remove_nil_entries
+    load_reviews_with_four_or_more_stars_from_neighbours
+    calculate_scores_for_reviews
+    exchange_review_for_business_and_round_score
+    set_recommendations
+    set_businesses
   end
 
-  def businesses
-    business_list = ["W2RFJg1N_MzuI8I42MQ2VA",
-                     "frvS-8am51BA9b4G1cbX9Q",
-                     "TVUIj9fsVF3JwvHkz_6-KQ",
-                     "ePiK7IM1ZWQiwuivFwKE1Q",
-                     "miDl22E-Vx1bTBIQXmYF9g",
-                     "QeD2Nre6KyYf1pci4W9QgA",
-                     "wtoJcKF1MMapd6nW-8a21g",
-                     "CdZKeUZtCjqV0ni2NeFlgA",
-                     "Qi61w8ZGqtipWfoALZq1hw",
-                     "0Q7ftIbv1r7Jiupuxi7WDw"]
-    business_list.collect{|b| BusinessMapper.get_by_yelp_id(b) }
+  def load_nearest_neighbours
+    @result = nearest_neighbours
+  end
+
+  def nearest_neighbours
+    @nearest_neighbours ||= (1..10).collect {|number| [ user.send("proximity_nearest_neighbour_#{number}"), user.send("id_nearest_neighbour_#{number}") ]}
+  end
+
+  def remove_nil_entries
+    @result.reject!{ |tuple| tuple.compact.empty? }
+  end
+
+  def load_reviews_with_four_or_more_stars_from_neighbours
+    @result.collect! { |tuple| [ tuple[0], Review.from_user(tuple[1]).with_min_four_stars] }    
+  end
+
+  def calculate_scores_for_reviews
+    @result.collect!{|tuple| tuple[1].collect{ |review| [ (1/tuple[0] * review.stars) , review ] }}.flatten!(1)
+  end
+
+  def exchange_review_for_business_and_round_score
+    @result.collect!{|tuple| [ tuple[0].round(0), Business.find_by_yelp_id(tuple[1].yelp_business_id) ] }
+  end
+
+  def set_recommendations
+    @recommendations = @result.collect{ |tuple| [ tuple[1].yelp_id, tuple[0] ] }.to_h
+  end
+
+  def set_businesses
+    @businesses = @result.collect{ |tuple| tuple[1]}
+  end
+
+  def result 
+    perform if @result.nil?
+    @result ||= perform
+  end
+
+  def list_of_recommendations
+    perform if @recommendations.nil?
+    @recommendations 
+    { recommendations: @recommendations }
+  end
+
+  def list_of_businesses
+    perform if @businesses.nil?
+    @businesses
   end
 
 end
