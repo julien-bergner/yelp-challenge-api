@@ -10,9 +10,9 @@ namespace :users do
       File.open(entry) do |file|
         while (line = file.gets)
           recommendations = YAML.load(line).sort{ |a,b| a[0] <=> b[0] }.first(10)
-
+          filename = File.basename(file,File.extname(file))
           User.create!(
-            yelp_id: File.basename(file,File.extname(file)).split("--").last,
+            yelp_id: filename.gsub("close_neighbors_neighbors_", ""),
 
             id_nearest_neighbour_1: get_value_if_present(recommendations, 0, 1),
             proximity_nearest_neighbour_1: get_value_if_present(recommendations, 0, 0),
